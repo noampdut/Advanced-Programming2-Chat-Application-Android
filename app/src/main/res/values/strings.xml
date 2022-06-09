@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">My Application</string>
+    <string name="login_etUserName">UserName</string>
+    <string name="login_etPassword">Password</string>
+    <string name="login_btnLogin">Login</string>
+    <string name="register_btn">Register</string>
+    <string name="Register_etUserName">UserName</string>
+    <string name="register_etPassword">Password</string>
+    <string name="Register_etNickName">NickName</string>
+    <string name="Register_etPassword_Validation">Password Validation</string>
+    <string name="registered_click_for_sign">Not registered? click here for sign</string>
+    <string name="btn_add_contact">Add Contact</string>
+    <string name="et_server">server</string>
+</resources>
