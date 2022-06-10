@@ -19,6 +19,15 @@ public class Contact {
         this.lastDate = lastDate;
     }
 
+    public Contact(String id, String name,  String server) {
+        this.id = id;
+        this.name = name;
+        this.server = server;
+        this.last = "";
+        this.lastDate = "";
+    }
+
+
     public Contact() {
     }
 
@@ -61,5 +70,9 @@ public class Contact {
 
     public void setLastDate(String lastDate) {
         this.lastDate = lastDate;
+    }
+    @Override
+    public String toString() {
+        return "contact{ id " + id + ", name= " + name +", server= " + server + " }";
     }
 }
