@@ -17,8 +17,12 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         binding.btnToRegister.setOnClickListener(v-> {
-
             Intent i = new Intent(this,RegisterActivity.class);
+            startActivity(i);
+        });
+
+        binding.btnLogin.setOnClickListener(v ->{
+            Intent i = new Intent(this,ContactsListActivity.class);
             startActivity(i);
         });
 

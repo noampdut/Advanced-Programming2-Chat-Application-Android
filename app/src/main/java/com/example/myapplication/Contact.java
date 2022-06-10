@@ -1,11 +1,13 @@
 package com.example.myapplication;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 @Entity
 public class Contact {
     @PrimaryKey
+    @NonNull
     private String id;
     private String name, server, last, lastDate;
 
