@@ -23,8 +23,8 @@ public class Contact {
         this.id = id;
         this.name = name;
         this.server = server;
-        this.last = "";
-        this.lastDate = "";
+        this.last = "last message";
+        this.lastDate = "13:14";
     }
 
 

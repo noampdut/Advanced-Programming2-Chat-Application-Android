@@ -2,23 +2,22 @@ package com.example.myapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class ContactsListActivity extends AppCompatActivity {
     private AppDb db;
     private ContactDao contactDao;
-    private List<Contact> contacts;
-    private ArrayAdapter<Contact> adapter;
-    private ListView lvContacts;
+    private List<Contact> contacts = new ArrayList<>();
+    private ContactAdapter contactAdapter;
+    private RecyclerView recyclerView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,18 +33,29 @@ public class ContactsListActivity extends AppCompatActivity {
             Intent i = new Intent(this, AddContactFormActivity.class);
             startActivity(i);
         });
+        //contacts = contactDao.index();
 
-        contacts = new ArrayList<>();
-        adapter =  new ArrayAdapter<Contact>(this, android.R.layout.simple_list_item_1, contacts);
-        lvContacts = findViewById(R.id.lvContacts); ///????
-        lvContacts.setAdapter(adapter);
+        //adapter =  new ArrayAdapter<Contact>(this, android.R.layout.simple_list_item_1, contacts);
+        recyclerView = findViewById(R.id.recyclerView); ///????
+
+        recyclerView.setLayoutManager((new LinearLayoutManager(this)));
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        contactAdapter = new ContactAdapter(contacts);
+        recyclerView.setAdapter(contactAdapter);
+
+        //recyclerView.setAdapter(adapter);
     }
     @Override
     protected void onResume(){
         super.onResume();
+
         contacts.clear();
         contacts.addAll(contactDao.index());
+        //recyclerView.setLayoutManager((new LinearLayoutManager(this)));
+        //recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
+        //contactAdapter = new ContactAdapter(contacts);
+        recyclerView.setAdapter(contactAdapter);
         //contacts = contactDao.index();
-       adapter.notifyDataSetChanged();
+        //contactAdapter.notifyDataSetChanged();
     }
 }
