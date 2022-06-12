@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/background_bg"
     tools:context=".LoginActivity">
 
 
@@ -38,16 +39,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:textColor="@color/white"
+            android:textStyle="bold"
             android:text="@string/login_btnLogin" />
 
         <Button
             android:id="@+id/btnToRegister"
-            android:layout_width="wrap_content"
+            android:layout_width="374dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:autoLink="all"
-            android:background="#FFFFFFFF"
-            android:text="@string/registered_click_for_sign" />
+            android:text="@string/registered_click_for_sign"
+            android:textColor="@color/white"
+            android:textStyle="bold" />
     </LinearLayout>
 
 
