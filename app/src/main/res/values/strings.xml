@@ -11,4 +11,6 @@
     <string name="registered_click_for_sign">Not registered? click here for sign</string>
     <string name="btn_add_contact">Add Contact</string>
     <string name="et_server">server</string>
+    <string name="write_here">write here...</string>
+    <string name="send">send</string>
 </resources>

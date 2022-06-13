@@ -12,10 +12,10 @@ public class Message {
     private int id;
     private String content;
     private String created;
-    private String sent;
+    private boolean sent;
     private String contactId;
 
-    public Message(String content, String created, String sent, String contactId) {
+    public Message(String content, String created, boolean sent, String contactId) {
         this.content = content;
         this.created = created;
         this.sent = sent;
@@ -46,11 +46,11 @@ public class Message {
         this.created = created;
     }
 
-    public String getSent() {
+    public boolean getSent() {
         return sent;
     }
 
-    public void setSent(String sent) {
+    public void setSent(boolean sent) {
         this.sent = sent;
     }
 

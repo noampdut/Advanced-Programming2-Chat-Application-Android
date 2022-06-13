@@ -8,6 +8,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
 import java.util.ArrayList;
@@ -17,9 +19,9 @@ public class ChatActivity extends AppCompatActivity {
 
     private AppDb db;
     private MessagesDao messagesDao;
-    private List<com.example.myapplication.Message> messages;
+    private ArrayList<com.example.myapplication.Message> messages = new ArrayList<>();
     private ArrayAdapter<com.example.myapplication.Message> adapter;
-    private ListView lvMessages;
+    private RecyclerView rcMessages;
     private TextView tvContact;
 
     @Override
@@ -32,12 +34,16 @@ public class ChatActivity extends AppCompatActivity {
         if(intent.getExtras() != null){
             Contact contact = (Contact) intent.getSerializableExtra("data");
             tvContact.setText(contact.getId());
-
         }
 
         db = Room.databaseBuilder(getApplicationContext(), AppDb.class, "messagesDB")
                 .allowMainThreadQueries().build();
         messagesDao = db.messagesDao();
+
+        MessagesAdapter adapter = new MessagesAdapter(this, messages);
+        rcMessages = findViewById(R.id.recycler_view);
+        rcMessages.setLayoutManager(new LinearLayoutManager(this));
+        rcMessages.setAdapter(adapter);
 
         /*FloatingActionButton btnAdd = findViewById(R.id.btnAdd);
         btnAdd.setOnClickListener(view ->{
