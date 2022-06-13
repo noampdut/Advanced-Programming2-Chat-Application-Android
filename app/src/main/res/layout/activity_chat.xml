@@ -6,16 +6,42 @@
     android:background="@drawable/background_bg"
     android:orientation="vertical"
     >
-    <TextView
-        android:layout_width="wrap_content"
+
+
+    <LinearLayout
+        android:id="@+id/tool_bar_contact"
+        android:layout_width="fill_parent"
+        android:paddingTop="10dp"
         android:layout_height="wrap_content"
-        android:id="@+id/selected_contact"/>
+        android:background="@color/white"
+        >
+        <ImageView
+            android:id="@+id/contact_image"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_user_icon"
+            android:layout_marginStart="140dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/selected_contact"
+            android:textStyle="bold"
+            android:textSize="40sp"
+            android:textColor="@color/Brown"
+            android:layout_marginStart="5dp"
+            />
+
+
+    </LinearLayout>
+
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="650dp"
-        tools:listitem="@layout/incoming_message"/>
+        android:paddingTop="50dp"
+        tools:listitem="@layout/incoming_message" />
 
     <LinearLayout
         android:id="@+id/input_bar"
