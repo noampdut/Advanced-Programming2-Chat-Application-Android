@@ -11,7 +11,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ContactsListActivity extends AppCompatActivity {
+public class ContactsListActivity extends AppCompatActivity implements ContactAdapter.SelectedContact{
     private AppDb db;
     private ContactDao contactDao;
     private List<Contact> contacts = new ArrayList<>();
@@ -40,7 +40,7 @@ public class ContactsListActivity extends AppCompatActivity {
 
         recyclerView.setLayoutManager((new LinearLayoutManager(this)));
         recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        contactAdapter = new ContactAdapter(contacts);
+        contactAdapter = new ContactAdapter(contacts,this);
         recyclerView.setAdapter(contactAdapter);
 
         //recyclerView.setAdapter(adapter);
@@ -57,5 +57,10 @@ public class ContactsListActivity extends AppCompatActivity {
         recyclerView.setAdapter(contactAdapter);
         //contacts = contactDao.index();
         //contactAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void selectedContact(Contact contact) {
+        startActivity(new Intent(ContactsListActivity.this, ChatActivity.class).putExtra("data",contact));
     }
 }

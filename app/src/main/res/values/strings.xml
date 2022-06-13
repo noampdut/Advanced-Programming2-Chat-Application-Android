@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">We Chat!</string>
     <string name="login_etUserName">UserName</string>
     <string name="login_etPassword">Password</string>
     <string name="login_btnLogin">Login</string>

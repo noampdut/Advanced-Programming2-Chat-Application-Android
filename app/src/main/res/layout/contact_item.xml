@@ -59,6 +59,16 @@
             android:layout_height="60dp"
             android:src="@drawable/ic_user_icon"
             android:layout_margin="7dp" />
+        <TextView
+            android:id="@+id/contact_to_chat"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentEnd="true"
+            android:text=">"
+            android:textStyle="bold"
+            android:textColor="@color/Silver"
+            android:textSize="50dp"
+            android:layout_margin="0dp" />
         
     </RelativeLayout>
 
