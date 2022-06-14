@@ -5,7 +5,6 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.room.Room;
 
 public class AddContactFormActivity extends AppCompatActivity {
 
@@ -17,8 +16,9 @@ public class AddContactFormActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_contact_form);
 
-        db = Room.databaseBuilder(getApplicationContext(), AppDb.class, "contactsDB")
-                .allowMainThreadQueries().build();
+        db = AppDb.getDb(this);
+//        db = Room.databaseBuilder(getApplicationContext(), AppDb.class, "contactsDB")
+//                .allowMainThreadQueries().build();
         contactDao = db.contactDao();
 
         Button btnSaveNewContact = findViewById(R.id.btnSaveNewContact);

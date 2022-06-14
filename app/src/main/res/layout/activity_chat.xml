@@ -4,9 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@drawable/background_bg"
-    android:orientation="vertical"
-    >
-
+    android:orientation="vertical">
 
     <LinearLayout
         android:id="@+id/tool_bar_contact"
@@ -37,11 +35,11 @@
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view"
+        android:id="@+id/recycler_view1"
         android:layout_width="match_parent"
         android:layout_height="650dp"
         android:paddingTop="50dp"
-        tools:listitem="@layout/incoming_message" />
+        tools:listitem="@layout/outcoming_message" />
 
     <LinearLayout
         android:id="@+id/input_bar"

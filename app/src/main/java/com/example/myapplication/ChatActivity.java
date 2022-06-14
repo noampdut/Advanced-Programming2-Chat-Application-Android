@@ -1,91 +1,82 @@
 package com.example.myapplication;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.room.Room;
+
+import com.example.myapplication.databinding.ActivityChatBinding;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ChatActivity extends AppCompatActivity {
 
     private AppDb db;
     private MessagesDao messagesDao;
-    private ArrayList<com.example.myapplication.Message> messages = new ArrayList<>();
+    private List<Message> messages = new ArrayList<>();
     private MessagesAdapter adapter;
     private RecyclerView rcMessages;
     private TextView tvContact;
+    private ActivityChatBinding binding;
+    private String currentContact;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_chat);
+        //setContentView(R.layout.activity_chat);
+        binding = ActivityChatBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
         tvContact = findViewById(R.id.selected_contact);
         Intent intent = getIntent();
 
-        if(intent.getExtras() != null){
+        if (intent.getExtras() != null) {
             Contact contact = (Contact) intent.getSerializableExtra("data");
             tvContact.setText(contact.getId());
+            currentContact = contact.getId();
         }
-
-        db = Room.databaseBuilder(getApplicationContext(), AppDb.class, "messagesDB")
-                .allowMainThreadQueries().build();
+        db = AppDb.getDb(this);
+//        db = Room.databaseBuilder(getApplicationContext(), AppDb.class, "messagesDB")
+//                .allowMainThreadQueries().build();
         messagesDao = db.messagesDao();
+        messages = messagesDao.get(currentContact);
 
-        //MessagesAdapter adapter = new MessagesAdapter(this, messages);
         adapter = new MessagesAdapter(this, messages);
-        rcMessages = findViewById(R.id.recycler_view);
+        rcMessages = findViewById(R.id.recycler_view1);
         rcMessages.setLayoutManager(new LinearLayoutManager(this));
+        rcMessages.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL));
         rcMessages.setAdapter(adapter);
 
         Button btnSaveNewMessage = findViewById(R.id.btnSendMessage);
         btnSaveNewMessage.setOnClickListener(v -> {
             EditText newMessage = findViewById(R.id.message_box);
-            Message message = new Message(newMessage.getText().toString(), "11:45", true,"ni");
+            Message message = new Message( newMessage.getText().toString(), currentContact);
             messagesDao.insert(message);
-            finish();
+            binding.messageBox.setText("");
+            onResume();
+
+             // finish();
         });
 
-
-        /*FloatingActionButton btnAdd = findViewById(R.id.btnAdd);
-        btnAdd.setOnClickListener(view ->{
-            Intent i = new Intent(this, AddContactFormActivity.class);
-            startActivity(i);
-        });*/
-
-       // messages = new ArrayList<>();
-        //adapter =  new ArrayAdapter<com.example.myapplication.Message>(this, android.R.layout.simple_list_item_1, messages);
-        //lvMessages = findViewById(R.id.lvMessages); ///????
-        //lvMessages.setAdapter(adapter);
     }
-
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     protected void onResume(){
         super.onResume();
-
         messages.clear();
-        messages.addAll(messagesDao.get("ni"));
-        //recyclerView.setLayoutManager((new LinearLayoutManager(this)));
-        //recyclerView.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
-        //contactAdapter = new ContactAdapter(contacts);
-        rcMessages.setAdapter(adapter);
-        //contacts = contactDao.index();
-        //contactAdapter.notifyDataSetChanged();
-
+        messages.addAll(messagesDao.get(currentContact));
         adapter.notifyDataSetChanged();
+        rcMessages.setAdapter(adapter);
+        //setContentView(R.layout.activity_chat);
+        binding.recyclerView1.setVisibility(View.VISIBLE);
     }
 
-/*    @Override
-    protected void onResume(){
-        super.onResume();
-        messages.clear();
-        messages.addAll(messagesDao.get("ofek"));
-        adapter.notifyDataSetChanged();
-    }*/
 }

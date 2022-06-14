@@ -5,20 +5,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import java.text.DateFormat;
-import java.util.ArrayList;
+
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.myapplication.Message;
-import com.example.myapplication.R;
+import java.text.DateFormat;
+import java.util.List;
 
 public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final Context context;
-    ArrayList<Message> messages;
+    List<Message> messages;
     //public static final int MESSAGE_TYPE_IN = 1;
     //public static final int MESSAGE_TYPE_OUT = 2;
 
-    public MessagesAdapter(Context context, ArrayList<Message> list) { // you can pass other parameters in constructor
+    public MessagesAdapter(Context context, List<Message> list) { // you can pass other parameters in constructor
         this.context = context;
         this.messages = list;
     }
@@ -34,7 +33,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         void bind(int position) {
             Message message = messages.get(position);
             contentTV.setText(message.getContent());
-            dateTV.setText(DateFormat.getTimeInstance(DateFormat.SHORT).format(message.getCreated()));
+            dateTV.setText(message.getCreated());
         }
     }
 
@@ -56,9 +55,9 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         if (viewType == 1) {
-            return new MessageInViewHolder(LayoutInflater.from(context).inflate(R.layout.incoming_message, parent, false));
+            return new MessageInViewHolder(LayoutInflater.from(context).inflate(R.layout.outcoming_message, parent, false));
         }
-        return new MessageOutViewHolder(LayoutInflater.from(context).inflate(R.layout.outcoming_message, parent, false));
+        return new MessageOutViewHolder(LayoutInflater.from(context).inflate(R.layout.incoming_message, parent, false));
     }
 
     @Override
