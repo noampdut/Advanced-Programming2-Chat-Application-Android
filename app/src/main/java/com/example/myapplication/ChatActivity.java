@@ -64,10 +64,7 @@ public class ChatActivity extends AppCompatActivity {
             EditText newMessage = findViewById(R.id.message_box);
             String content = newMessage.getText().toString();
             Message message = new Message( content, currentContact.getId());
-          //  Message message1 = new Message( "check second side", currentContact.getId());
-           // message1.setSent(false);
             messagesDao.insert(message);
-          //  messagesDao.insert(message1);
             binding.messageBox.setText("");
             InputMethodManager inputManager = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
             inputManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
@@ -75,7 +72,6 @@ public class ChatActivity extends AppCompatActivity {
             currentContact.setLast(content);
             currentContact.setLastDate(message.getCreated());
             contactDao.update(currentContact);
-            // finish();
         });
 
     }
