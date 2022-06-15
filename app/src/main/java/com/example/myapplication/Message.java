@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.util.Date;
+
 @Entity
 public class Message {
 
@@ -24,7 +26,8 @@ public class Message {
 
     public Message(String content, String contactId) {
         this.content = content;
-        this.created = "55555";
+        this.created = new Date().toLocaleString();
+       // this.created = new Date().toString();
         this.sent = true;
         this.contactId = contactId;
     }

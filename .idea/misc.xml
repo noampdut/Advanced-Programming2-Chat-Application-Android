@@ -6,15 +6,16 @@
         <entry key="..\:/Users/noamp/AndroidStudioProjects/MyApplication/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1525" />
         <entry key="..\:/Users/noamp/AndroidStudioProjects/MyApplication/app/src/main/res/drawable/ic_baseline_perm_identity_24.xml" value="0.171" />
         <entry key="..\:/Users/noamp/AndroidStudioProjects/MyApplication/app/src/main/res/drawable/ic_launcher_background.xml" value="0.1525" />
+        <entry key="..\:/Users/noamp/AndroidStudioProjects/MyApplication/app/src/main/res/drawable/ic_user_icon.xml" value="0.223" />
         <entry key="..\:/Users/noamp/AndroidStudioProjects/MyApplication/app/src/main/res/layout/activity_add_contact_form.xml" value="0.264" />
-        <entry key="..\:/Users/noamp/AndroidStudioProjects/MyApplication/app/src/main/res/layout/activity_chat.xml" value="0.25" />
+        <entry key="..\:/Users/noamp/AndroidStudioProjects/MyApplication/app/src/main/res/layout/activity_chat.xml" value="0.1" />
         <entry key="..\:/Users/noamp/AndroidStudioProjects/MyApplication/app/src/main/res/layout/activity_contacts_list.xml" value="0.1" />
         <entry key="..\:/Users/noamp/AndroidStudioProjects/MyApplication/app/src/main/res/layout/activity_login.xml" value="0.264" />
         <entry key="..\:/Users/noamp/AndroidStudioProjects/MyApplication/app/src/main/res/layout/activity_maim.xml" value="0.25" />
         <entry key="..\:/Users/noamp/AndroidStudioProjects/MyApplication/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/Users/noamp/AndroidStudioProjects/MyApplication/app/src/main/res/layout/activity_register.xml" value="0.25" />
         <entry key="..\:/Users/noamp/AndroidStudioProjects/MyApplication/app/src/main/res/layout/contact_item.xml" value="0.1" />
-        <entry key="..\:/Users/noamp/AndroidStudioProjects/MyApplication/app/src/main/res/layout/incoming_message.xml" value="0.24635416666666668" />
+        <entry key="..\:/Users/noamp/AndroidStudioProjects/MyApplication/app/src/main/res/layout/incoming_message.xml" value="0.1" />
         <entry key="..\:/Users/noamp/AndroidStudioProjects/MyApplication/app/src/main/res/layout/outcoming_message.xml" value="0.24635416666666668" />
       </map>
     </option>

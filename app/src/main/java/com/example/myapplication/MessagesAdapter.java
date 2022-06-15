@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.text.DateFormat;
 import java.util.List;
 
 public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -48,7 +47,7 @@ public class MessagesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         void bind(int position) {
             Message message = messages.get(position);
             contentTV.setText(message.getContent());
-            dateTV.setText(DateFormat.getTimeInstance(DateFormat.SHORT).format(message.getCreated()));
+            dateTV.setText(message.getCreated());
         }
     }
 

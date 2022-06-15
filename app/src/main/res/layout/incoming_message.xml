@@ -21,9 +21,8 @@
             android:minWidth="120dp"
             android:maxWidth="250dp"
             android:layout_alignParentLeft="true"
-            android:textSize="16sp"
-            android:textColor="@android:color/black"
-            android:text="Hi" />
+            android:textSize="9sp"
+            android:textColor="@android:color/black" />
 
         <TextView
             android:id="@+id/date_text"
@@ -32,8 +31,7 @@
             android:layout_alignRight="@+id/content_text"
             android:layout_below="@+id/content_text"
             android:textSize="11sp"
-            android:textColor="#b3b3b3"
-            tools:text="11:34" />
+            android:textColor="#b3b3b3" />
 
     </RelativeLayout>
 </RelativeLayout>

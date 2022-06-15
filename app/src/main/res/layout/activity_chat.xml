@@ -11,34 +11,33 @@
         android:layout_width="fill_parent"
         android:paddingTop="10dp"
         android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:background="@color/DarkSalmon"
         >
         <ImageView
             android:id="@+id/contact_image"
             android:layout_width="60dp"
             android:layout_height="match_parent"
             android:src="@drawable/ic_user_icon"
-            android:layout_marginStart="140dp"/>
+            android:layout_marginStart="120dp"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/selected_contact"
-            android:textStyle="bold"
-            android:textSize="40sp"
-            android:textColor="@color/Brown"
-            android:layout_marginStart="5dp"
+            android:textStyle="italic"
+            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:layout_marginStart="0dp"
             />
 
 
     </LinearLayout>
 
 
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view1"
         android:layout_width="match_parent"
         android:layout_height="650dp"
-        android:paddingTop="50dp"
+        android:paddingTop="45dp"
         tools:listitem="@layout/outcoming_message" />
 
     <LinearLayout

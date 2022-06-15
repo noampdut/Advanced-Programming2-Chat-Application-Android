@@ -1,7 +1,6 @@
 package com.example.myapplication;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -26,8 +25,8 @@ public class Contact  implements Serializable {
         this.id = id;
         this.name = name;
         this.server = server;
-        this.last = "last message";
-        this.lastDate = "13:14";
+        this.last = "New Chat!";
+        this.lastDate = "";
     }
 
 
