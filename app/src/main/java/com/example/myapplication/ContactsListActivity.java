@@ -21,6 +21,7 @@ public class ContactsListActivity extends AppCompatActivity implements ContactAd
     private ContactAdapter contactAdapter;
     private RecyclerView recyclerView;
     UserAPI userAPI;
+    User activeUser;
     //private User activeUser = new User("admin","admin",contacts);
 
 
@@ -34,11 +35,14 @@ public class ContactsListActivity extends AppCompatActivity implements ContactAd
 //              .allowMainThreadQueries().build();
        contactDao = db.contactDao();
         Intent intent = getIntent();
+        userAPI = new UserAPI();
 
         if (intent.getExtras() != null) {
-            userAPI = (UserAPI) intent.getSerializableExtra("userApi");
+            activeUser = (User)intent.getSerializableExtra("activeUser");
+            contacts = activeUser.getContacts();
+            userAPI.updatedContactsFun(contacts);
         }
-        userAPI.getContacts();
+        //userAPI.getContacts();
         //contacts = contactDao.index();
 
 

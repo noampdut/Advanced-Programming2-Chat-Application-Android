@@ -22,6 +22,11 @@ public class UserAPI extends AppCompatActivity implements Serializable {
     AppDb db;
     ContactDao contactDao;
     Retrofit retrofit;
+
+    public WesServiceAPI getWesServiceAPI() {
+        return wesServiceAPI;
+    }
+
     WesServiceAPI wesServiceAPI;
     private User activeUser;
 
@@ -60,7 +65,7 @@ public class UserAPI extends AppCompatActivity implements Serializable {
         });
     }
 
-    private void updatedContactsFun(List<Contact> updateContacts) {
+    public void updatedContactsFun(List<Contact> updateContacts) {
         for(int i = 0; i < updateContacts.size(); i++){
             Contact contact = updateContacts.get(i);
             if (contactDao.get(contact.getId()) == null){
@@ -70,7 +75,7 @@ public class UserAPI extends AppCompatActivity implements Serializable {
 
     }
 
-    public void postActiveUser(String userName, String password){
+  /*  public void postActiveUser(String userName, String password){
         //LoginRequest loginRequest = new LoginRequest(userName, password);
         Call<User> call = wesServiceAPI.postActiveUser(userName, password);
         call.enqueue(new Callback<User>() {
@@ -94,5 +99,5 @@ public class UserAPI extends AppCompatActivity implements Serializable {
                 //activeUser = null;
             }
         });
-    }
+    }*/
 }

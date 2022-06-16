@@ -28,4 +28,6 @@ public interface WesServiceAPI {
     @POST("login")
     Call<User> postActiveUser(@Query("userName") String userName, @Query("password") String password);
 
+    @POST("register")
+    Call<User> postActiveUserFromRegister(@Query("userName") String userName, @Query("nickName") String nickName, @Query("pwd") String pwd);
 }
