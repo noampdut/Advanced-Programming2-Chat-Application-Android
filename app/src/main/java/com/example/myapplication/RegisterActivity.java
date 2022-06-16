@@ -15,14 +15,17 @@ import retrofit2.Response;
 public class RegisterActivity extends AppCompatActivity {
     AppDb db;
     UserAPI userAPI;
-
     private ActivityRegisterBinding binding;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityRegisterBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         db = AppDb.getDb(this);
+
+        //List<Contact> contactListTemp = db.contactDao().index();
+
         userAPI = new UserAPI();
 
         binding.registerButton.setOnClickListener(v -> {

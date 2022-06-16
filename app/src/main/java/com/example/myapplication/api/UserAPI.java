@@ -66,6 +66,14 @@ public class UserAPI extends AppCompatActivity implements Serializable {
     }
 
     public void updatedContactsFun(List<Contact> updateContacts) {
+        //int size = contactDao.index().size();
+        List<Contact> temp = contactDao.index();
+        for (int j = 0; j < temp.size(); j++) {
+            Contact contact = temp.get(j);
+            if (!updateContacts.contains(contact)) {
+                contactDao.delete(contact);
+            }
+        }
         for(int i = 0; i < updateContacts.size(); i++){
             Contact contact = updateContacts.get(i);
             if (contactDao.get(contact.getId()) == null){
