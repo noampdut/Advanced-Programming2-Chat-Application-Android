@@ -5,13 +5,25 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
-public class Contact  implements Serializable {
+public class Contact implements Serializable {
     @PrimaryKey
     @NonNull
     private String id;
     private String name, server, last, lastDate;
+
+    public static List<Message> getMessageList() {
+        return messageList;
+    }
+
+    public static void setMessageList(List<Message> messageList) {
+        Contact.messageList = messageList;
+    }
+
+    private static List<Message> messageList = new ArrayList<>();
 
     public Contact(String id, String name, String server, String last, String lastDate) {
         this.id = id;
@@ -21,7 +33,7 @@ public class Contact  implements Serializable {
         this.lastDate = lastDate;
     }
 
-    public Contact(String id, String name,  String server) {
+    public Contact(String id, String name, String server) {
         this.id = id;
         this.name = name;
         this.server = server;

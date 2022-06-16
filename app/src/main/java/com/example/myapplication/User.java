@@ -9,31 +9,32 @@ import java.util.List;
 public class User implements Serializable {
     @PrimaryKey
     @NonNull
-    private String Id;
-    private String NickName;
+    private String userName;
+    private String nickName;
+    private String picture;
     private List<Contact> contacts;
 
     public User(@NonNull String id, String nickName, List<Contact> contacts) {
-        Id = id;
-        NickName = nickName;
+        userName = id;
+        this.nickName = nickName;
         this.contacts = contacts;
     }
 
     @NonNull
-    public String getId() {
-        return Id;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setId(@NonNull String id) {
-        Id = id;
+    public void setUserName(@NonNull String userName) {
+        this.userName = userName;
     }
 
     public String getNickName() {
-        return NickName;
+        return nickName;
     }
 
     public void setNickName(String nickName) {
-        NickName = nickName;
+        this.nickName = nickName;
     }
 
     public List<Contact> getContacts() {

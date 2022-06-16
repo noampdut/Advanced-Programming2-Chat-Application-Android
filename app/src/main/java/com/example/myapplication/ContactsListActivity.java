@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.myapplication.api.ContactAPI;
+import com.example.myapplication.api.UserAPI;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -20,7 +20,8 @@ public class ContactsListActivity extends AppCompatActivity implements ContactAd
     private List<Contact> contacts = new ArrayList<>();
     private ContactAdapter contactAdapter;
     private RecyclerView recyclerView;
-    private User activeUser = new User("admin","admin",contacts);
+    UserAPI userAPI;
+    //private User activeUser = new User("admin","admin",contacts);
 
 
     @Override
@@ -32,9 +33,13 @@ public class ContactsListActivity extends AppCompatActivity implements ContactAd
 //       db = Room.databaseBuilder(getApplicationContext(), AppDb.class, "contactsDB")
 //              .allowMainThreadQueries().build();
        contactDao = db.contactDao();
+        Intent intent = getIntent();
 
-        ContactAPI contactAPI = new ContactAPI(activeUser);
-        contactAPI.get();
+        if (intent.getExtras() != null) {
+            userAPI = (UserAPI) intent.getSerializableExtra("userApi");
+        }
+        userAPI.getContacts();
+        //contacts = contactDao.index();
 
 
         FloatingActionButton btnAdd = findViewById(R.id.btnAdd);

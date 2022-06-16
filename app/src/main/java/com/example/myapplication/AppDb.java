@@ -12,7 +12,7 @@ public abstract class AppDb extends RoomDatabase {
     public abstract MessagesDao messagesDao();
     private static AppDb db;
 
-     static AppDb getDb(Context context){
+     public static AppDb getDb(Context context) {
         if(db == null) {
            db = Room.databaseBuilder(context.getApplicationContext(),AppDb.class,"mainDB")
                    .allowMainThreadQueries()

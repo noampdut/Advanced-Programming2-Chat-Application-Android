@@ -6,6 +6,9 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class AddContactFormActivity extends AppCompatActivity {
 
     private AppDb db;
@@ -28,6 +31,7 @@ public class AddContactFormActivity extends AppCompatActivity {
             EditText et_server = findViewById(R.id.et_server);
             Contact contact = new Contact(et_userName.getText().toString(),
                     et_nickName.getText().toString(), et_server.getText().toString());
+
             contactDao.insert(contact);
             finish();
         });
