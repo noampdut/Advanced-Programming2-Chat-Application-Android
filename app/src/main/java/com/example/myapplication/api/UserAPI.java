@@ -39,7 +39,7 @@ public class UserAPI extends AppCompatActivity implements Serializable {
         this.contactDao = db.contactDao();
         this.messagesDao = db.messagesDao();
         //this.activeUser = activeUser;
-        retrofit = new Retrofit.Builder().baseUrl(MyApplication.context.getString(R.string.BaseUrl))
+        retrofit = new Retrofit.Builder().baseUrl(MyApplication.getBaseUrl())
                 .addConverterFactory(GsonConverterFactory.create()).build();
         wesServiceAPI = retrofit.create(WesServiceAPI.class);
     }
@@ -70,12 +70,9 @@ public class UserAPI extends AppCompatActivity implements Serializable {
     }
     public void updatedMessagedFun(List<Message> updateMessages, String contactID) {
         int size = messagesDao.get(contactID).size();
-        for (int i = 0; i <size; i++) {
-            Message message = messagesDao.get(i);
-            messagesDao.delete(message);
-        }
-        for (int i = 0; i < updateMessages.size(); i++) {
-            messagesDao.insert(updateMessages.get(i));
+        for (int i = size; i < updateMessages.size(); i++) {
+            Message message = updateMessages.get(i);
+            messagesDao.insert(message);
         }
     }
 

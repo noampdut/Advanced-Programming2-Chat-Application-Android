@@ -39,6 +39,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:gravity="center"
+            android:inputType="textPassword"
             android:hint="@string/register_etPassword" />
 
         <EditText
@@ -56,6 +57,7 @@
             android:layout_gravity="center"
             android:textColor="@color/white"
             android:textStyle="bold"
+            android:inputType="textPassword"
             style="@style/Widget.AppCompat.Button.Colored"
             android:text="@string/register_btn" />
 

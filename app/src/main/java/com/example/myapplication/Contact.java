@@ -5,7 +5,6 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -14,23 +13,16 @@ public class Contact implements Serializable {
     @NonNull
     private String id;
     private String name, server, last, lastDate;
+    private static List<Message> messagesList;
 
-    public static List<Message> getMessageList() {
-        return messageList;
-    }
 
-    public static void setMessageList(List<Message> messageList) {
-        Contact.messageList = messageList;
-    }
-
-    private static List<Message> messageList = new ArrayList<>();
-
-    public Contact(String id, String name, String server, String last, String lastDate) {
+    public Contact(String id, String name, String server, String last, String lastDate, List<Message> messages) {
         this.id = id;
         this.name = name;
         this.server = server;
         this.last = last;
         this.lastDate = lastDate;
+        this.messagesList = messages;
     }
 
     public Contact(String id, String name, String server) {
@@ -40,6 +32,15 @@ public class Contact implements Serializable {
         this.last = "New Chat!";
         this.lastDate = "";
     }
+
+    public List<Message> getMessageList() {
+        return messagesList;
+    }
+
+    public void setMessageList(List<Message> messageList) {
+        this.messagesList = messageList;
+    }
+
 
 
     public Contact() {

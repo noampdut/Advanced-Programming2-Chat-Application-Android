@@ -37,4 +37,7 @@ public interface WesServiceAPI {
 
     @GET("contacts/{id}/messages")
     Call<List<Message>> getMessages(@Path("id") String id, @Query("user") String user);
+
+    @POST("contacts/{user}/{id}/messages")
+    Call<Void> postNewMessage(@Path("user") String user, @Path("id") String id, @Query("content") String content);
 }

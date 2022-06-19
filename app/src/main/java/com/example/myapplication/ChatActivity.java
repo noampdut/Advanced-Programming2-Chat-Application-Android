@@ -99,18 +99,32 @@ public class ChatActivity extends AppCompatActivity {
         btnSaveNewMessage.setOnClickListener(v -> {
             EditText newMessage = findViewById(R.id.message_box);
             String content = newMessage.getText().toString();
-            Message message = new Message( content, currentContact.getId());
+            Message message = new Message(content, currentContact.getId());
             messagesDao.insert(message);
             binding.messageBox.setText("");
             InputMethodManager inputManager = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
             inputManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
-            onResume();
-            currentContact.setLast(content);
-            currentContact.setLastDate(message.getCreated());
-            contactDao.update(currentContact);
-        });
 
+
+        Call<Void> call = userAPI.getWesServiceAPI().postNewMessage(activeUser.getUserName(),currentContact.getId(), content);
+        call.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                int returnValue = response.code();
+                if (returnValue != 404) {
+                    currentContact.setLast(content);
+                    currentContact.setLastDate(message.getCreated());
+                    contactDao.update(currentContact);
+                    onResume();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {}
+        });
+        });
     }
+
     @SuppressLint("NotifyDataSetChanged")
     @Override
     protected void onResume(){
@@ -123,10 +137,18 @@ public class ChatActivity extends AppCompatActivity {
         binding.recyclerView1.setVisibility(View.VISIBLE);
     }
 
-
-    void updateCurrentContact(List<Message> updateMessages, String contactID) {
+/*    void updateCurrentContact(List<Message> updateMessages, String contactID) {
         for (int i = 0; i< updateMessages.size(); i++) {
             updateMessages.get(i).setContactId(contactID);
         }
-    }
+    }*/
+/*
+    int getIndexOfCurrentContact(List<Contact> contactsList, Contact contact) {
+        for (int i =0 ;i < contactsList.size(); i++) {
+            if (contactsList.get(i).getId().equals(contact.getId())) {
+                return i;
+            }
+        }
+        return 0;
+    }*/
 }

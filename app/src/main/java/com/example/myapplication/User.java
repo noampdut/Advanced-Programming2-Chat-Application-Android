@@ -15,7 +15,7 @@ public class User implements Serializable {
     private List<Contact> contacts;
 
     public User(@NonNull String id, String nickName, List<Contact> contacts) {
-        userName = id;
+        this.userName = id;
         this.nickName = nickName;
         this.contacts = contacts;
     }

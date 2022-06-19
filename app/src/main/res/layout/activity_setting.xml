@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/background_bg"
-    tools:context=".LoginActivity">
+    tools:context=".SettingActivity">
 
 
     <LinearLayout
@@ -18,42 +18,25 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <EditText
-            android:id="@+id/et_userName_login"
+            android:id="@+id/et_change_server"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
             android:gravity="center"
-            android:hint="@string/login_etUserName"
+            android:hint="@string/enter_new_default_server"
             android:inputType="textPersonName" />
 
-        <EditText
-            android:id="@+id/et_password_login"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:gravity="center"
-            android:inputType="textPassword"
-            android:hint="@string/login_etPassword" />
+
 
         <Button
-            android:id="@+id/btnLogin"
+            android:id="@+id/btn_change_server"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:textColor="@color/white"
             android:textStyle="bold"
-            android:text="@string/login_btnLogin" />
+            android:text="@string/btn_change_default_server" />
 
-        <Button
-            android:id="@+id/btnToRegister"
-            android:layout_width="374dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:autoLink="all"
-            android:text="@string/registered_click_for_sign"
-            android:textColor="@color/white"
-            android:textStyle="bold" />
     </LinearLayout>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

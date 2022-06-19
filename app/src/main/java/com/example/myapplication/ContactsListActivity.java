@@ -22,7 +22,6 @@ public class ContactsListActivity extends AppCompatActivity implements ContactAd
     private RecyclerView recyclerView;
     UserAPI userAPI;
     User activeUser;
-    //private User activeUser = new User("admin","admin",contacts);
 
 
     @Override
@@ -31,8 +30,6 @@ public class ContactsListActivity extends AppCompatActivity implements ContactAd
         setContentView(R.layout.activity_contacts_list);
 
         db = AppDb.getDb(this);
-//       db = Room.databaseBuilder(getApplicationContext(), AppDb.class, "contactsDB")
-//              .allowMainThreadQueries().build();
        contactDao = db.contactDao();
         Intent intent = getIntent();
         userAPI = new UserAPI();
@@ -51,6 +48,13 @@ public class ContactsListActivity extends AppCompatActivity implements ContactAd
             startActivity(i);
         });
 
+        FloatingActionButton btnSetting = findViewById(R.id.btnSetting);
+        btnSetting.setOnClickListener(view ->{
+            Intent i = new Intent(this, SettingActivity.class);
+            //i.putExtra("activeUser", activeUser);
+            startActivity(i);
+        });
+
         recyclerView = findViewById(R.id.recyclerView);
 
         recyclerView.setLayoutManager((new LinearLayoutManager(this)));
@@ -60,7 +64,7 @@ public class ContactsListActivity extends AppCompatActivity implements ContactAd
 
     }
     @Override
-    protected void onResume(){
+    protected void onResume() {
         super.onResume();
         contacts.clear();
         contacts.addAll(contactDao.index());

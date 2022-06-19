@@ -14,4 +14,6 @@
     <string name="write_here">write here...</string>
     <string name="send">send</string>
     <string name="BaseUrl">http://10.0.2.2:5001/api/</string>
+    <string name="btn_change_default_server">Change Default Server</string>
+    <string name="enter_new_default_server">Enter base URL format with new default server... </string>
 </resources>
