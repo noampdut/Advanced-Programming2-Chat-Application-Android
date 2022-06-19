@@ -1,18 +1,22 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
-
 import androidx.appcompat.app.AppCompatActivity;
-
-import java.util.ArrayList;
+import com.example.myapplication.api.UserAPI;
 import java.util.List;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class AddContactFormActivity extends AppCompatActivity {
 
     private AppDb db;
     private ContactDao contactDao;
+    private User activeUser;
+    private UserAPI userAPI;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,16 +28,59 @@ public class AddContactFormActivity extends AppCompatActivity {
 //                .allowMainThreadQueries().build();
         contactDao = db.contactDao();
 
+        userAPI = new UserAPI();
+        Intent intent = getIntent();
+        if (intent.getExtras() != null) {
+            activeUser = (User)intent.getSerializableExtra("activeUser");
+            //contacts = activeUser.getContacts();
+            //userAPI.updatedContactsFun(contacts);
+        }
+
+
         Button btnSaveNewContact = findViewById(R.id.btnSaveNewContact);
         btnSaveNewContact.setOnClickListener(v -> {
             EditText et_userName = findViewById(R.id.et_userName);
             EditText et_nickName = findViewById(R.id.et_nickName);
             EditText et_server = findViewById(R.id.et_server);
-            Contact contact = new Contact(et_userName.getText().toString(),
-                    et_nickName.getText().toString(), et_server.getText().toString());
+            String userName = et_userName.getText().toString();
+            String nickName = et_nickName.getText().toString();
+            String server = et_server.getText().toString();
 
-            contactDao.insert(contact);
-            finish();
+            Call<Void> call = userAPI.getWesServiceAPI().postNewContact(activeUser.getUserName(), userName, nickName, server);
+            call.enqueue(new Callback<Void>() {
+                @Override
+                public void onResponse(Call<Void> call, Response<Void> response) {
+                    int returnValue = response.code();
+                    if (returnValue == 201) {
+                        //System.out.println("from response");
+                        Call<List<Contact>> second_call = userAPI.getWesServiceAPI().getContacts(activeUser.getUserName());
+                        second_call.enqueue(new Callback<List<Contact>>() {
+                            @Override
+                            public void onResponse(Call<List<Contact>> second_call, Response<List<Contact>> response) {
+                                List<Contact> updateContacts = response.body();
+                                userAPI.updatedContactsFun(updateContacts);
+                                //Intent i = new Intent(AddContactFormActivity.this, ContactsListActivity.class);
+                                //i.putExtra("activeUser", activeUser);
+
+                                finish();
+                                //startActivity(i);
+
+                            }
+
+                            @Override
+                            public void onFailure(Call<List<Contact>> second_call, Throwable t) {
+                            }
+                        });
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Void> call, Throwable t) {
+                    System.out.println("from failure");
+                    System.out.println(t);
+                }
+            });
+
         });
     }
 }

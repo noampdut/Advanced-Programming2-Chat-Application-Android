@@ -16,8 +16,8 @@ public interface MessagesDao {
     @Query("SELECT * FROM message WHERE contactId = :contactId")
     List<Message> get(String contactId);
 
-//    @Query("SELECT * FROM message WHERE id = :id")
-//    Message get(int id);
+    @Query("SELECT * FROM message WHERE id = :id")
+    Message get(int id);
 
     @Insert
     void insert(Message...Messages);

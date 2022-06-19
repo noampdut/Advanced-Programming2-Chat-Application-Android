@@ -2,6 +2,7 @@ package com.example.myapplication.api;
 
 
 import com.example.myapplication.Contact;
+import com.example.myapplication.Message;
 import com.example.myapplication.User;
 
 import java.util.List;
@@ -30,4 +31,10 @@ public interface WesServiceAPI {
 
     @POST("register")
     Call<User> postActiveUserFromRegister(@Query("userName") String userName, @Query("nickName") String nickName, @Query("pwd") String pwd);
+
+    @POST("contacts")
+    Call<Void> postNewContact(@Query("user") String user, @Query("id") String id, @Query("name") String name, @Query("server") String server);
+
+    @GET("contacts/{id}/messages")
+    Call<List<Message>> getMessages(@Path("id") String id, @Query("user") String user);
 }

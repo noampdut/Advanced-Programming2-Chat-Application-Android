@@ -42,13 +42,12 @@ public class ContactsListActivity extends AppCompatActivity implements ContactAd
             contacts = activeUser.getContacts();
             userAPI.updatedContactsFun(contacts);
         }
-        //userAPI.getContacts();
-        //contacts = contactDao.index();
 
 
         FloatingActionButton btnAdd = findViewById(R.id.btnAdd);
         btnAdd.setOnClickListener(view ->{
             Intent i = new Intent(this, AddContactFormActivity.class);
+            i.putExtra("activeUser", activeUser);
             startActivity(i);
         });
 
@@ -70,6 +69,9 @@ public class ContactsListActivity extends AppCompatActivity implements ContactAd
 
     @Override
     public void selectedContact(Contact contact) {
-        startActivity(new Intent(ContactsListActivity.this, ChatActivity.class).putExtra("data",contact));
+        Intent i = new Intent(this, ChatActivity.class);
+        i.putExtra("putExtraObject", new putExtraObject(activeUser, contact));
+        startActivity(i);
+        //startActivity(new Intent(ContactsListActivity.this, ChatActivity.class).putExtra("data",contact));
     }
 }

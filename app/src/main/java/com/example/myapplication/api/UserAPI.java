@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.myapplication.AppDb;
 import com.example.myapplication.Contact;
 import com.example.myapplication.ContactDao;
+import com.example.myapplication.Message;
+import com.example.myapplication.MessagesDao;
 import com.example.myapplication.MyApplication;
 import com.example.myapplication.R;
 import com.example.myapplication.User;
@@ -21,6 +23,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class UserAPI extends AppCompatActivity implements Serializable {
     AppDb db;
     ContactDao contactDao;
+    MessagesDao messagesDao;
     Retrofit retrofit;
 
     public WesServiceAPI getWesServiceAPI() {
@@ -34,6 +37,7 @@ public class UserAPI extends AppCompatActivity implements Serializable {
         //Context context = this.getApplicationContext();
         db = AppDb.getDb(this);
         this.contactDao = db.contactDao();
+        this.messagesDao = db.messagesDao();
         //this.activeUser = activeUser;
         retrofit = new Retrofit.Builder().baseUrl(MyApplication.context.getString(R.string.BaseUrl))
                 .addConverterFactory(GsonConverterFactory.create()).build();
@@ -63,6 +67,16 @@ public class UserAPI extends AppCompatActivity implements Serializable {
                 //System.out.println("Fail to request");
             }
         });
+    }
+    public void updatedMessagedFun(List<Message> updateMessages, String contactID) {
+        int size = messagesDao.get(contactID).size();
+        for (int i = 0; i <size; i++) {
+            Message message = messagesDao.get(i);
+            messagesDao.delete(message);
+        }
+        for (int i = 0; i < updateMessages.size(); i++) {
+            messagesDao.insert(updateMessages.get(i));
+        }
     }
 
     public void updatedContactsFun(List<Contact> updateContacts) {

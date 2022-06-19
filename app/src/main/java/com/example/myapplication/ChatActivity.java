@@ -15,10 +15,15 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myapplication.api.UserAPI;
 import com.example.myapplication.databinding.ActivityChatBinding;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ChatActivity extends AppCompatActivity {
 
@@ -30,7 +35,9 @@ public class ChatActivity extends AppCompatActivity {
     private RecyclerView rcMessages;
     private TextView tvContact;
     private ActivityChatBinding binding;
+    private UserAPI userAPI;
     private Contact currentContact;
+    private User activeUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,16 +49,45 @@ public class ChatActivity extends AppCompatActivity {
         Intent intent = getIntent();
 
         if (intent.getExtras() != null) {
-            Contact contact = (Contact) intent.getSerializableExtra("data");
-            tvContact.setText(contact.getId());
-            currentContact = contact;
+            //User activeUser
+            putExtraObject data = (putExtraObject) intent.getSerializableExtra("putExtraObject");
+            currentContact = data.currentContact;
+            activeUser = data.activeUser;
+            //Contact contact = (Contact) intent.getSerializableExtra("putExtraObject");
+            tvContact.setText(currentContact.getId());
+
         }
         db = AppDb.getDb(this);
-//        db = Room.databaseBuilder(getApplicationContext(), AppDb.class, "messagesDB")
-//                .allowMainThreadQueries().build();
+        userAPI = new UserAPI();
         messagesDao = db.messagesDao();
         contactDao = db.contactDao();
-        messages = messagesDao.get(currentContact.getId());
+        //messages = messagesDao.get(currentContact.getId());
+
+
+        /*Call<List<Message>> call = userAPI.getWesServiceAPI().getMessages(currentContact.getId(), activeUser.getUserName());
+        call.enqueue(new Callback<List<Message>>() {
+            @Override
+            public void onResponse(Call<List<Message>> call, Response<List<Message>> response) {
+                int returnValue = response.code();
+                if (returnValue != 404) {
+                    List<Message> updateMessages = response.body();
+                    //Intent i = new Intent(LoginActivity.this, ContactsListActivity.class);
+                    //i.putExtra("activeUser", user);
+                    //startActivity(i);
+                    updateCurrentContact(updateMessages, currentContact.getId());
+                    //userAPI.updatedMessagedFun(updateMessages, currentContact.getId());
+                    messages = messagesDao.get(currentContact.getId());
+                } else {
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Message>> call, Throwable t) {
+            }
+        });*/
+
+
 
         adapter = new MessagesAdapter(this, messages);
         rcMessages = findViewById(R.id.recycler_view1);
@@ -87,4 +123,10 @@ public class ChatActivity extends AppCompatActivity {
         binding.recyclerView1.setVisibility(View.VISIBLE);
     }
 
+
+    void updateCurrentContact(List<Message> updateMessages, String contactID) {
+        for (int i = 0; i< updateMessages.size(); i++) {
+            updateMessages.get(i).setContactId(contactID);
+        }
+    }
 }
