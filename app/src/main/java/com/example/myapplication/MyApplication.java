@@ -5,6 +5,8 @@ import android.content.Context;
 public class MyApplication extends Application {
 
     public static Context context;
+    public static String baseUrl;
+
 
     public static String getBaseUrl() {
         return baseUrl;
@@ -14,7 +16,6 @@ public class MyApplication extends Application {
         MyApplication.baseUrl = baseUrl;
     }
 
-    public static String baseUrl;
 
     @Override
     public void onCreate() {

@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.myapplication.api.ContactApi;
 import com.example.myapplication.api.UserAPI;
 import java.util.List;
 import retrofit2.Call;
@@ -17,6 +19,7 @@ public class AddContactFormActivity extends AppCompatActivity {
     private ContactDao contactDao;
     private User activeUser;
     private UserAPI userAPI;
+    private ContactApi contactApi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,8 @@ public class AddContactFormActivity extends AppCompatActivity {
             String userName = et_userName.getText().toString();
             String nickName = et_nickName.getText().toString();
             String server = et_server.getText().toString();
+            contactApi = new ContactApi("http://10.0.2.2:" + server + "/api/");
+
 
             Call<Void> call = userAPI.getWesServiceAPI().postNewContact(activeUser.getUserName(), userName, nickName, server);
             call.enqueue(new Callback<Void>() {
@@ -59,7 +64,7 @@ public class AddContactFormActivity extends AppCompatActivity {
                             public void onResponse(Call<List<Contact>> second_call, Response<List<Contact>> response) {
                                 List<Contact> updateContacts = response.body();
                                 userAPI.updatedContactsFun(updateContacts);
-                                Call<Void> call2 = userAPI.getWesServiceAPI().postInvitations(activeUser.getUserName(),userName, server);
+                                Call<Void> call2 = contactApi.getWesServiceAPI().postInvitations(activeUser.getUserName(),userName, server);
                                 call2.enqueue(new Callback<Void>() {
                                     @Override
                                     public void onResponse(Call<Void> call2, Response<Void> response) {

@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.myapplication.api.ContactApi;
 import com.example.myapplication.api.UserAPI;
 import com.example.myapplication.databinding.ActivityChatBinding;
 
@@ -38,6 +39,7 @@ public class ChatActivity extends AppCompatActivity {
     private UserAPI userAPI;
     private Contact currentContact;
     private User activeUser;
+    private ContactApi contactApi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,31 +63,7 @@ public class ChatActivity extends AppCompatActivity {
         userAPI = new UserAPI();
         messagesDao = db.messagesDao();
         contactDao = db.contactDao();
-        //messages = messagesDao.get(currentContact.getId());
-
-
-        /*Call<List<Message>> call = userAPI.getWesServiceAPI().getMessages(currentContact.getId(), activeUser.getUserName());
-        call.enqueue(new Callback<List<Message>>() {
-            @Override
-            public void onResponse(Call<List<Message>> call, Response<List<Message>> response) {
-                int returnValue = response.code();
-                if (returnValue != 404) {
-                    List<Message> updateMessages = response.body();
-                    //Intent i = new Intent(LoginActivity.this, ContactsListActivity.class);
-                    //i.putExtra("activeUser", user);
-                    //startActivity(i);
-                    updateCurrentContact(updateMessages, currentContact.getId());
-                    //userAPI.updatedMessagedFun(updateMessages, currentContact.getId());
-                    messages = messagesDao.get(currentContact.getId());
-                } else {
-
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Message>> call, Throwable t) {
-            }
-        });*/
+        contactApi = new ContactApi("http://10.0.2.2:" + currentContact.getServer() + "/api/");
 
 
         adapter = new MessagesAdapter(this, messages);
@@ -114,7 +92,7 @@ public class ChatActivity extends AppCompatActivity {
                     currentContact.setLast(content);
                     currentContact.setLastDate(message.getCreated());
                     contactDao.update(currentContact);
-                    Call<Void> call2 = userAPI.getWesServiceAPI().postTransfer(activeUser.getUserName(),currentContact.getId(), content);
+                    Call<Void> call2 = contactApi.getWesServiceAPI().postTransfer(activeUser.getUserName(),currentContact.getId(), content);
                     call2.enqueue(new Callback<Void>() {
                         @Override
                         public void onResponse(Call<Void> call2, Response<Void> response) {
