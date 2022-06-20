@@ -40,4 +40,10 @@ public interface WesServiceAPI {
 
     @POST("contacts/{user}/{id}/messages")
     Call<Void> postNewMessage(@Path("user") String user, @Path("id") String id, @Query("content") String content);
+
+    @POST("transfer")
+    Call<Void> postTransfer(@Query("from") String from, @Query("to") String to, @Query("content") String content);
+
+    @POST("invitations")
+    Call<Void> postInvitations(@Query("from") String from, @Query("to") String to, @Query("server") String server);
 }

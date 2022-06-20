@@ -59,11 +59,23 @@ public class AddContactFormActivity extends AppCompatActivity {
                             public void onResponse(Call<List<Contact>> second_call, Response<List<Contact>> response) {
                                 List<Contact> updateContacts = response.body();
                                 userAPI.updatedContactsFun(updateContacts);
-                                //Intent i = new Intent(AddContactFormActivity.this, ContactsListActivity.class);
-                                //i.putExtra("activeUser", activeUser);
+                                Call<Void> call2 = userAPI.getWesServiceAPI().postInvitations(activeUser.getUserName(),userName, server);
+                                call2.enqueue(new Callback<Void>() {
+                                    @Override
+                                    public void onResponse(Call<Void> call2, Response<Void> response) {
+                                        int returnValue = response.code();
+                                        if (returnValue != 404) {
+                                            finish();
+                                        }
+                                        finish();
+                                    }
 
-                                finish();
-                                //startActivity(i);
+                                    @Override
+                                    public void onFailure(Call<Void> call2, Throwable t) {
+                                        System.out.println("from faiulre");
+                                    }
+                                });
+
 
                             }
 

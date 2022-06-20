@@ -88,7 +88,6 @@ public class ChatActivity extends AppCompatActivity {
         });*/
 
 
-
         adapter = new MessagesAdapter(this, messages);
         rcMessages = findViewById(R.id.recycler_view1);
         rcMessages.setLayoutManager(new LinearLayoutManager(this));
@@ -115,7 +114,25 @@ public class ChatActivity extends AppCompatActivity {
                     currentContact.setLast(content);
                     currentContact.setLastDate(message.getCreated());
                     contactDao.update(currentContact);
-                    onResume();
+                    Call<Void> call2 = userAPI.getWesServiceAPI().postTransfer(activeUser.getUserName(),currentContact.getId(), content);
+                    call2.enqueue(new Callback<Void>() {
+                        @Override
+                        public void onResponse(Call<Void> call2, Response<Void> response) {
+                            int returnValue = response.code();
+                            if (returnValue != 404) {
+                                //currentContact.setLast(content);
+                                //currentContact.setLastDate(message.getCreated());
+                                //contactDao.update(currentContact);
+                                onResume();
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<Void> call2, Throwable t) {
+                            System.out.println("from faiulre");
+
+                        }
+                    });
                 }
             }
 
