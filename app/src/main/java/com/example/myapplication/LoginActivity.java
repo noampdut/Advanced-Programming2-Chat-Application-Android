@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.api.UserAPI;
 import com.example.myapplication.databinding.ActivityLoginBinding;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import java.io.Serializable;
 
@@ -18,6 +19,7 @@ import retrofit2.Response;
 public class LoginActivity extends AppCompatActivity {
     AppDb db;
     UserAPI userAPI;
+    String token;
     private ActivityLoginBinding binding;
 
     @Override
@@ -39,6 +41,11 @@ public class LoginActivity extends AppCompatActivity {
             String userName = et_userName.getText().toString();
             String password = et_password.getText().toString();
 
+            FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(LoginActivity.this, instanceIdResult -> {
+                token = instanceIdResult.getToken();
+
+            });
+
 
             Call<User> call = userAPI.getWesServiceAPI().postActiveUser(userName, password);
             call.enqueue(new Callback<User>() {
@@ -47,9 +54,20 @@ public class LoginActivity extends AppCompatActivity {
                     int returnValue = response.code();
                     if (returnValue != 404) {
                         User user = response.body();
-                        Intent i = new Intent(LoginActivity.this, ContactsListActivity.class);
-                        i.putExtra("activeUser", user);
-                        startActivity(i);
+
+                        Call<Void> call2 = userAPI.getWesServiceAPI().postToken(userName, token);
+                        call2.enqueue(new Callback<Void>() {
+                            @Override
+                            public void onResponse(Call<Void> call2, Response<Void> response) {
+                                Intent i = new Intent(LoginActivity.this, ContactsListActivity.class);
+                                i.putExtra("activeUser", user);
+                                startActivity(i);
+                            }
+
+                            @Override
+                            public void onFailure(Call<Void> call2, Throwable t) {
+                            }
+                        });
                     } else {
 
                     }

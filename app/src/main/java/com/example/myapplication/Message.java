@@ -32,6 +32,14 @@ public class Message {
         this.contactId = contactId;
     }
 
+/*    public Message(int id, String content, String created, boolean sent, String contactId) {
+        this.id = id;
+        this.content = content;
+        this.created = created;
+        this.sent = sent;
+        this.contactId = contactId;
+    }*/
+
     public int getId() {
         return id;
     }

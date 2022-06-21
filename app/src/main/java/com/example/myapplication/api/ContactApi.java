@@ -1,17 +1,10 @@
 package com.example.myapplication.api;
-
-import com.example.myapplication.AppDb;
-import com.example.myapplication.MyApplication;
-import com.example.myapplication.User;
+import androidx.appcompat.app.AppCompatActivity;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ContactApi {
-    public WesServiceAPI getWesServiceAPI() {
-        return wesServiceAPI;
-    }
-
+public class ContactApi extends AppCompatActivity {
     WesServiceAPI wesServiceAPI;
     Retrofit retrofit;
     String contactBaseUrl;
@@ -21,5 +14,9 @@ public class ContactApi {
         retrofit = new Retrofit.Builder().baseUrl(contactBaseUrl)
                 .addConverterFactory(GsonConverterFactory.create()).build();
         wesServiceAPI = retrofit.create(WesServiceAPI.class);
+    }
+
+    public WesServiceAPI getWesServiceAPI() {
+        return wesServiceAPI;
     }
 }

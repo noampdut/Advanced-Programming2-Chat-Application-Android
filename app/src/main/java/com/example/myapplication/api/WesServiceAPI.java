@@ -46,4 +46,8 @@ public interface WesServiceAPI {
 
     @POST("invitations")
     Call<Void> postInvitations(@Query("from") String from, @Query("to") String to, @Query("server") String server);
+
+    @POST("login/token")
+    Call<Void> postToken(@Query("activeUser") String activeUser, @Query("token") String token);
 }
+

@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.google.firebase.iid.FirebaseInstanceId;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -23,6 +25,7 @@ public class Contact implements Serializable {
         this.last = last;
         this.lastDate = lastDate;
         this.messagesList = messages;
+
     }
 
     public Contact(String id, String name, String server) {
