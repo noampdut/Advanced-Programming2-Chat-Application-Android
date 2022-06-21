@@ -23,20 +23,14 @@ public class MyService extends FirebaseMessagingService {
 
     @Override
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
-        if (remoteMessage.getNotification() != null) {
 
-            int messageId = Integer.parseInt(remoteMessage.getData().get("id"));
-            String content = remoteMessage.getData().get("content");
-            String created = remoteMessage.getData().get("created");
-           // Boolean sent = Boolean.parseBoolean(remoteMessage.getData().get("sent"));
-            String contactId = remoteMessage.getData().get("contactId");
-            Message message = new Message(content, contactId);
-            message.setCreated(created);
-            message.setSent(false);
-            db.messagesDao().insert(message);
-            
-
-            Message createdMessage = db.messagesDao().get(messageId);
+        super.onMessageReceived(remoteMessage);
+        if(remoteMessage.getData().get("messageType").equals("message")) {
+            handleNewMessage(remoteMessage);
+        }
+        else {
+            handleNewContact(remoteMessage);
+        }
 
             createNotificationChannel();
             NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "1")
@@ -47,6 +41,31 @@ public class MyService extends FirebaseMessagingService {
 
             NotificationManagerCompat notificationManagerCompat = NotificationManagerCompat.from(this);
             notificationManagerCompat.notify(1, builder.build());
+    }
+
+
+    public void handleNewContact(RemoteMessage remoteMessage) {
+        if (remoteMessage.getNotification() != null) {
+            //int messageId = Integer.parseInt(remoteMessage.getData().get("id"));
+            String userName = remoteMessage.getData().get("userName");
+            String nickName = remoteMessage.getData().get("nickName");
+            String server = remoteMessage.getData().get("server");
+            Contact contact = new Contact(userName, nickName, server);
+            db.contactDao().insert(contact);
+        }
+    }
+
+    public void handleNewMessage(RemoteMessage remoteMessage) {
+        if (remoteMessage.getNotification() != null) {
+            int messageId = Integer.parseInt(remoteMessage.getData().get("id"));
+            String content = remoteMessage.getData().get("content");
+            String created = remoteMessage.getData().get("created");
+            String contactId = remoteMessage.getData().get("contactId");
+            Message message = new Message(content, contactId);
+            message.setCreated(created);
+            message.setSent(false);
+            message.setId(messageId); /////////
+            db.messagesDao().insert(message);
         }
     }
 
