@@ -1,8 +1,10 @@
 package com.example.myapplication;
 
 import android.annotation.SuppressLint;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -11,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -43,22 +46,22 @@ public class ChatActivity extends AppCompatActivity {
     private Contact currentContact;
     private User activeUser;
     private ContactApi contactApi;
+    public static final String NOTIFY_ACTIVITY_ACTION = "notify_activity";
+    private BroadcastReceiver broadcastReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_chat);
         binding = ActivityChatBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         tvContact = findViewById(R.id.selected_contact);
         Intent intent = getIntent();
+        messagesBroadcastReceive();
 
         if (intent.getExtras() != null) {
-            //User activeUser
             putExtraObject data = (putExtraObject) intent.getSerializableExtra("putExtraObject");
             currentContact = data.currentContact;
             activeUser = data.activeUser;
-            //Contact contact = (Contact) intent.getSerializableExtra("putExtraObject");
             tvContact.setText(currentContact.getId());
 
         }
@@ -134,6 +137,51 @@ public class ChatActivity extends AppCompatActivity {
         //setContentView(R.layout.activity_chat);
         binding.recyclerView1.setVisibility(View.VISIBLE);
     }
+
+    private void messagesBroadcastReceive() {
+        broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String currentContactId = (String)intent.getSerializableExtra("contactId");
+                messages.clear();
+                messages.addAll(messagesDao.get(currentContactId));
+                adapter.notifyDataSetChanged();
+                rcMessages.setAdapter(adapter);
+                binding.recyclerView1.setVisibility(View.VISIBLE);
+            }
+        };
+        LocalBroadcastManager.getInstance(MyApplication.context).registerReceiver(broadcastReceiver, new IntentFilter("message"));
+    }
+
+    @Override
+    protected void onDestroy(){
+        super.onDestroy();
+        LocalBroadcastManager.getInstance(MyApplication.context).unregisterReceiver(broadcastReceiver); ///check
+    }
+
+/*    @Override
+    protected void onStart() {
+        super.onStart();
+        broadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                if (intent.getAction().equals(NOTIFY_ACTIVITY_ACTION))
+                {
+                    //to do smth
+                }
+            }
+        }
+
+        IntentFilter filter = new IntentFilter( NOTIFY_ACTIVITY_ACTION );
+        registerReceiver(broadcastReceiver, filter);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unregisterReceiver(broadcastReceiver);
+    }*/
+
 
 /*    void updateCurrentContact(List<Message> updateMessages, String contactID) {
         for (int i = 0; i< updateMessages.size(); i++) {

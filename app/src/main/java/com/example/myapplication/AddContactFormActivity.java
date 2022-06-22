@@ -64,7 +64,7 @@ public class AddContactFormActivity extends AppCompatActivity {
                             public void onResponse(Call<List<Contact>> second_call, Response<List<Contact>> response) {
                                 List<Contact> updateContacts = response.body();
                                 userAPI.updatedContactsFun(updateContacts);
-                                Call<Void> call2 = contactApi.getWesServiceAPI().postInvitations(activeUser.getUserName(),userName, server);
+                                Call<Void> call2 = contactApi.getWesServiceAPI().postInvitations(activeUser.getUserName(),userName, "localhost:5001");
                                 call2.enqueue(new Callback<Void>() {
                                     @Override
                                     public void onResponse(Call<Void> call2, Response<Void> response) {

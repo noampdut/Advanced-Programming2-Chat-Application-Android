@@ -10,6 +10,7 @@ import android.os.IBinder;
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
@@ -50,22 +51,36 @@ public class MyService extends FirebaseMessagingService {
             String userName = remoteMessage.getData().get("userName");
             String nickName = remoteMessage.getData().get("nickName");
             String server = remoteMessage.getData().get("server");
+            if (server != null && server.contains("localhost:")) {
+                server = server.replace("localhost:", "");
+            }
             Contact contact = new Contact(userName, nickName, server);
             db.contactDao().insert(contact);
+
+            Intent intent = new Intent("newContact");
+            intent.putExtra("contact", contact);
+            LocalBroadcastManager.getInstance(MyApplication.context).sendBroadcast(intent);
         }
     }
 
     public void handleNewMessage(RemoteMessage remoteMessage) {
         if (remoteMessage.getNotification() != null) {
-            int messageId = Integer.parseInt(remoteMessage.getData().get("id"));
+            //int messageId = Integer.parseInt(remoteMessage.getData().get("id"));
             String content = remoteMessage.getData().get("content");
             String created = remoteMessage.getData().get("created");
             String contactId = remoteMessage.getData().get("contactId");
             Message message = new Message(content, contactId);
             message.setCreated(created);
             message.setSent(false);
-            message.setId(messageId); /////////
             db.messagesDao().insert(message);
+            Contact contact = db.contactDao().get(contactId);
+            contact.setLast(content);
+            contact.setLastDate(created);
+            db.contactDao().update(contact);
+
+            Intent intent = new Intent("message");
+            intent.putExtra("contactId", contactId);
+            LocalBroadcastManager.getInstance(MyApplication.context).sendBroadcast(intent);
         }
     }
 
