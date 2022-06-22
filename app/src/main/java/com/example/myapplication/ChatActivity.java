@@ -159,42 +159,4 @@ public class ChatActivity extends AppCompatActivity {
         LocalBroadcastManager.getInstance(MyApplication.context).unregisterReceiver(broadcastReceiver); ///check
     }
 
-/*    @Override
-    protected void onStart() {
-        super.onStart();
-        broadcastReceiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-                if (intent.getAction().equals(NOTIFY_ACTIVITY_ACTION))
-                {
-                    //to do smth
-                }
-            }
-        }
-
-        IntentFilter filter = new IntentFilter( NOTIFY_ACTIVITY_ACTION );
-        registerReceiver(broadcastReceiver, filter);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        unregisterReceiver(broadcastReceiver);
-    }*/
-
-
-/*    void updateCurrentContact(List<Message> updateMessages, String contactID) {
-        for (int i = 0; i< updateMessages.size(); i++) {
-            updateMessages.get(i).setContactId(contactID);
-        }
-    }*/
-/*
-    int getIndexOfCurrentContact(List<Contact> contactsList, Contact contact) {
-        for (int i =0 ;i < contactsList.size(); i++) {
-            if (contactsList.get(i).getId().equals(contact.getId())) {
-                return i;
-            }
-        }
-        return 0;
-    }*/
 }

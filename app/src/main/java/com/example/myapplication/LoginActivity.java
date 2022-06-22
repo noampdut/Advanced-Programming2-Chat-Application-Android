@@ -56,16 +56,12 @@ public class LoginActivity extends AppCompatActivity {
                     if (returnValue != 404) {
                         User user = response.body();
 
-                        for (int i = 0; i< user.getContacts().size(); i++) {
-
-
-
-
+                   /*     for (int i = 0; i< user.getContacts().size(); i++) {
                             List<Message> messageList = user.getContacts().get(i).getMessageList();
                             Contact contact = db.contactDao().get(user.getContacts().get(i).getId());
                             contact.setMessageList(messageList);
                             db.contactDao().update(user.getContacts().get(i));
-                        }
+                        }*/
 
                         Call<Void> call2 = userAPI.getWesServiceAPI().postToken(userName, token);
                         call2.enqueue(new Callback<Void>() {
@@ -91,5 +87,5 @@ public class LoginActivity extends AppCompatActivity {
             });
 
         });
-}
+    }
 }
