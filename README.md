@@ -1,10 +1,10 @@
 # Advanced-Programming-2-Ex3-Client
 
-First run the ASP.NET project (The first link) -this is the server.
+First run the ASP.NET project -this is the server. link: https://github.com/lilachlacham/Advanced-Programing-2-ex3-server
 
-Next run the android project (The second link).
+Next run the android project - The files in this repo. 
 
-We supported also at chatting with react, so you can run the react project(the third link):
+We supported also at chatting with react, so you can run the react project: https://github.com/lilachlacham/Advanced-Programing--ex3-react
 
 In the ex2/chat directory run the commands:
 npm start
